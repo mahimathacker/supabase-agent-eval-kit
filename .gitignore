@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.local
+
+# Supabase CLI local state
+supabase/.branches/
+supabase/.temp/
+
+# Eval run artifacts
+reports/
