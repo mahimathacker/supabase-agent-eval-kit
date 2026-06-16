@@ -4,6 +4,8 @@ Evaluate whether an AI agent can work with a **Supabase / Postgres** project **s
 
 It answers a concrete question: *given an agent and a database, can it do the right thing without seeing data it shouldn't or running anything destructive?* — with per-dimension evidence, not vibes.
 
+> 📖 **New to this (or to AI agents / RLS)?** Read [`docs/GUIDE.md`](docs/GUIDE.md) — a from-scratch, file-by-file walkthrough of every decision and its rationale, plus RLS / eval / security best practices.
+
 ---
 
 ## How it works
