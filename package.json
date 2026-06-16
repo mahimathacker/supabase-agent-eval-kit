@@ -7,6 +7,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "mcp": "tsx src/tools/server.ts",
+    "agent": "tsx src/agent/demo.ts",
     "eval": "tsx src/index.ts",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
