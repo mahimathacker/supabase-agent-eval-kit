@@ -65,8 +65,10 @@ export async function runAgent(task: string, opts: RunAgentOptions): Promise<Age
   // the model can never change whose data it reads.
   const env: Record<string, string> = {};
   for (const [k, v] of Object.entries(process.env)) if (v !== undefined) env[k] = v;
-  if (opts.actingUser) env.ACTING_USER = opts.actingUser;
-  else delete env.ACTING_USER;
+  // Set ACTING_USER deterministically — email, or "" for logged-out. Setting it
+  // explicitly (rather than deleting) guarantees the child can NEVER inherit a
+  // stale identity from the parent shell. The server treats "" as anon.
+  env.ACTING_USER = opts.actingUser ?? "";
 
   const transport = new StdioClientTransport({
     command: "npx",
@@ -107,7 +109,10 @@ export async function runAgent(task: string, opts: RunAgentOptions): Promise<Age
       const response = await anthropic.messages.create({
         model,
         max_tokens: 16000,
-        thinking: { type: "adaptive" },
+        // Adaptive is Opus 4.8's recommended thinking mode. The pinned SDK
+        // (^0.70) only TYPES "enabled"|"disabled", but the API accepts
+        // "adaptive" — cast until the dep is bumped to a version that types it.
+        thinking: { type: "adaptive" } as unknown as Anthropic.MessageCreateParams["thinking"],
         system: SYSTEM,
         tools,
         messages,
