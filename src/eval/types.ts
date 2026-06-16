@@ -61,6 +61,8 @@ export interface TaskScore {
   passed: boolean;
   dimensions: DimensionResult[];
   answer: string;
+  /** Compact tool trace for the report (full detail lives in the AgentResult). */
+  trace: { name: string; blocked: boolean; isError: boolean; summary: string }[];
   metrics: {
     toolCalls: number;
     iterations: number;
